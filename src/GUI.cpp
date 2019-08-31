@@ -38,14 +38,18 @@ void GUI::layout_controller() {
 
     ImGui::Spacing();
     int ff_c_size = fw.fourier_coeff.size();
+    bool series_updated = false;
     if ( ImGui::SliderInt( "Series length", &ff_c_size, 0, 1000 ) ) {
         fw.fourier_coeff.resize( ff_c_size );
+        series_updated = true;
     }
-    if ( ImGui::Button( "Calculate fourier series" ) ) {
+    if ( ImGui::Button( "Calculate fourier series" ) || ( fw.auto_update_series && series_updated ) ) {
         fft_series( fw.raw_image, fw.fourier_coeff );
         fw.spirograph_values = fw.fourier_coeff;
         fw.graph_result.clear();
     }
+    ImGui::SameLine();
+    ImGui::Checkbox( "Auto update", &fw.auto_update_series );
 
     ImGui::Spacing();
     ImGui::SliderFloat( "Spirograph speed", &fw.rotation_speed, 0, 0.01, "%.5f" );
@@ -57,8 +61,8 @@ void GUI::layout_controller() {
     ImGui::SliderInt( "Interaction count", &fw.simulation_iterations, 0, 100 );
 
     ImGui::Checkbox( "Draw original image", &fw.draw_raw );
-    ImGui::Checkbox( "Draw graph image", &fw.draw_graph );
-    ImGui::Checkbox( "Draw ruler image", &fw.draw_compass );
+    ImGui::Checkbox( "Draw graph", &fw.draw_graph );
+    ImGui::Checkbox( "Draw ruler", &fw.draw_compass );
 
     ImGui::End();
 }

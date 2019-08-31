@@ -1,6 +1,6 @@
-# Spirograph using the Fourier Transformation
-Translates any SVG into a spirograph and renders it.
-Inspired by https://www.youtube.com/watch?v=r6sGWTCMz2k
+# Spirograph using the Fourier Series
+Translates any SVG image into an approximation of it using the Fourier Series and renders it with a spirograph.
+Inspired by 3Blue1Brown https://www.youtube.com/watch?v=r6sGWTCMz2k
 
 ## Dependencies
 sfml, imgui, imgui-sfml, nanosvg, noc (file dialog)
@@ -29,4 +29,15 @@ cmake ..
 make
 ```
 
-## Tests
+## Examples
+Approximating a simple rectangle
+![rectangle](res/spirograph_rectangle.png)
+Outline of Europe
+![europe_outline](res/spirograph_europe.png)
+Bit sharper
+![europe_outline_sharp](res/spirograph_europe_sharp.png)
+
+## Notes
+I planned to run the calculations on another thread, but as it turns out the operations are relatively cheap and only spirographs bigger than 10^3 start to take some time.
+
+The "series length" should not be set to values bigger than the "file vertex count".

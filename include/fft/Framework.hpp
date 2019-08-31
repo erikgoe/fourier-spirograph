@@ -36,6 +36,7 @@ class Framework {
     int simulation_iterations = 1; // How often to repeat the simulation per frame
     String file_path;
     int interpolation_step = 5;
+    bool auto_update_series = false;
 
     // Thread data
     std::atomic_int calc_offset_ctr;
