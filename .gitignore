@@ -1,0 +1,6 @@
+build/
+tools/
+Win32/
+dep/
+.fssignore
+imgui.ini

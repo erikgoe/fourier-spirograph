@@ -1,0 +1,19 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <memory>
+#include <cmath>
+#include <complex>
+#include <functional>
+#include <limits>
+#include <stack>
+#include <thread>
+
+#include "SFML/Window.hpp"
+#include "SFML/Graphics.hpp"
+#include "imgui-SFML.h"
+#include "imgui.h"
