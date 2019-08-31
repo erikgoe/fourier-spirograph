@@ -1,6 +1,7 @@
 #include "fft/stdafx.hpp"
 #include "fft/Base.hpp"
 #include "fft/GUI.hpp"
+#include "fft/Vectorize.hpp"
 #include "jet/live/Live.hpp"
 #include "noc/noc_file_dialog.h"
 
@@ -24,8 +25,14 @@ void GUI::layout_controller() {
     if ( ImGui::Button( "Open file" ) ) {
         auto path_c = noc_file_dialog_open( NOC_FILE_DIALOG_OPEN, nullptr, nullptr, nullptr );
         if ( path_c ) {
-            log( "Selected file " + String( path_c ) );
+            fw.file_path = path_c;
+            vectorize( fw.file_path, fw.raw_image, fw.interpolation_step );
+            log( "Selected file " + fw.file_path );
         }
+    }
+
+    if ( ImGui::SliderInt( "Steps", &fw.interpolation_step, 2, 100 ) ) {
+        vectorize( fw.file_path, fw.raw_image, fw.interpolation_step );
     }
 
     ImGui::End();

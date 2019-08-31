@@ -7,6 +7,10 @@ T sgn( const T &val ) {
     return ( T( 0 ) < val ) - ( val < T( 0 ) );
 }
 
+template <typename T>
+T lerp( T v0, T v1, T t ) {
+    return ( 1 - t ) * v0 + t * v1;
+}
 
 template <typename T>
 T vec_len( const sf::Vector2<T>& v ) {
@@ -15,6 +19,11 @@ T vec_len( const sf::Vector2<T>& v ) {
 template <typename T>
 T vec_len_sqr( const sf::Vector2<T>& v ) {
     return v.x * v.x + v.y * v.y;
+}
+
+template <typename T>
+sf::Vector2<T> vec_lerp( sf::Vector2<T> v0, sf::Vector2<T> v1, T t ) {
+    return ( 1 - t ) * v0 + t * v1;
 }
 template <typename T>
 sf::Vector2<T> vec_norm( const sf::Vector2<T>& v ) {

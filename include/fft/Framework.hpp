@@ -23,6 +23,9 @@ class Framework {
     std::function<void()> quit_callback;
 
     // Simulation data
+    std::vector<sf::Vector2f> raw_image; // Vector line
+    String file_path;
+    int interpolation_step = 5;
 
     // Thread data
     std::atomic_int calc_offset_ctr;

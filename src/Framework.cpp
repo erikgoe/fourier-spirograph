@@ -64,7 +64,7 @@ void Framework::update( sf::Time &delta_time ) {
     timer_sec += delta_time.asSeconds();
 
     // Simulation
-    
+
 
     // Thread
     ++calc_offset_ctr;
@@ -76,7 +76,7 @@ void Framework::thread_run() {
     while ( thread_should_run ) {
         if ( calc_offset_ctr >= 2 ) {
             calc_offset_ctr = 0;
-            
+
             // Heavy calculations
 
         } else
@@ -84,7 +84,19 @@ void Framework::thread_run() {
     }
 }
 void Framework::render( sf::RenderTarget &target ) {
-    
+    // Debug rendering
+    {
+        sf::VertexArray va1( sf::PrimitiveType::LinesStrip, raw_image.size() );
+        sf::VertexArray va2( sf::PrimitiveType::Points, raw_image.size() );
+        for ( size_t i = 0; i < raw_image.size(); i++ ) {
+            va1[i] = sf::Vertex( raw_image[i], sf::Color( 255, 255, 255, 180 ) );
+            va2[i] = va1[i];
+            va2[i].color = sf::Color::Magenta;
+        }
+
+        target.draw( va1 );
+        target.draw( va2 );
+    }
 }
 
 void Framework::reload() {

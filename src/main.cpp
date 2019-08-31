@@ -13,6 +13,9 @@
 #define NOC_FILE_DIALOG_IMPLEMENTATION
 #include "noc/noc_file_dialog.h"
 
+#define NANOSVG_IMPLEMENTATION // Expands implementation
+#include "nanosvg/src/nanosvg.h"
+
 void updateView( sf::View &view, const float &zoom_factor, const sf::Vector2f &window_size, const sf::Vector2f &center ) {
     view = sf::View( center, window_size );
     view.zoom( zoom_factor );
