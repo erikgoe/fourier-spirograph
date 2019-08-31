@@ -34,7 +34,7 @@ Approximating a simple rectangle
 ![rectangle](res/spirograph_rectangle.png)
 Outline of Europe
 ![europe_outline](res/spirograph_europe.png)
-Bit sharper
+A bit sharper
 ![europe_outline_sharp](res/spirograph_europe_sharp.png)
 
 ## Notes

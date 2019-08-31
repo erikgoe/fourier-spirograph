@@ -123,6 +123,8 @@ void Framework::render( sf::RenderTarget &target ) {
         for ( size_t i = 0; i < spirograph_nodes.size(); i++ ) {
             va[i + 1] = sf::Vertex( spirograph_nodes[i], sf::Color( 200, 200, 50, 150 ) );
         }
+        if ( spirograph_nodes.size() > 0 )
+            va[0].color = va[1].color;
         target.draw( va );
     }
 }
