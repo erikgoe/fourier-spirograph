@@ -2,6 +2,7 @@
 #include "fft/Base.hpp"
 #include "fft/GUI.hpp"
 #include "fft/Vectorize.hpp"
+#include "fft/DFT.hpp"
 #include "jet/live/Live.hpp"
 #include "noc/noc_file_dialog.h"
 
@@ -15,12 +16,10 @@ void GUI::layout_gui( float delta_time ) {
     ImGui::Begin( "Info" );
     ImGui::Text( String( "FPS: " + to_string( 1.f / delta_time ) ).c_str() );
     ImGui::End();
-
-    ImGui::ShowDemoWindow();
 }
 
 void GUI::layout_controller() {
-    ImGui::Begin( "Loader" );
+    ImGui::Begin( "Settings" );
 
     if ( ImGui::Button( "Open file" ) ) {
         auto path_c = noc_file_dialog_open( NOC_FILE_DIALOG_OPEN, nullptr, nullptr, nullptr );
@@ -31,9 +30,35 @@ void GUI::layout_controller() {
         }
     }
 
-    if ( ImGui::SliderInt( "Steps", &fw.interpolation_step, 2, 100 ) ) {
+    if ( ImGui::SliderInt( "Steps", &fw.interpolation_step, 2, 100 ) && !fw.file_path.empty() ) {
         vectorize( fw.file_path, fw.raw_image, fw.interpolation_step );
+        fw.fourier_coeff.resize( fw.raw_image.size() );
     }
+    ImGui::Text( ( "File vertex count: " + to_string( fw.raw_image.size() ) ).c_str() );
+
+    ImGui::Spacing();
+    int ff_c_size = fw.fourier_coeff.size();
+    if ( ImGui::SliderInt( "Series length", &ff_c_size, 0, 1000 ) ) {
+        fw.fourier_coeff.resize( ff_c_size );
+    }
+    if ( ImGui::Button( "Calculate fourier series" ) ) {
+        fft_series( fw.raw_image, fw.fourier_coeff );
+        fw.spirograph_values = fw.fourier_coeff;
+        fw.graph_result.clear();
+    }
+
+    ImGui::Spacing();
+    ImGui::SliderFloat( "Spirograph speed", &fw.rotation_speed, 0, 0.01, "%.5f" );
+    if ( ImGui::Button( "Clear graph" ) ) {
+        fw.graph_result.clear();
+    }
+    ImGui::Text( ( "Graph vertex count: " + to_string( fw.graph_result.size() ) ).c_str() );
+
+    ImGui::SliderInt( "Interaction count", &fw.simulation_iterations, 0, 100 );
+
+    ImGui::Checkbox( "Draw original image", &fw.draw_raw );
+    ImGui::Checkbox( "Draw graph image", &fw.draw_graph );
+    ImGui::Checkbox( "Draw ruler image", &fw.draw_compass );
 
     ImGui::End();
 }

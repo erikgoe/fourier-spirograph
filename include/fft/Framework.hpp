@@ -23,7 +23,17 @@ class Framework {
     std::function<void()> quit_callback;
 
     // Simulation data
+    bool draw_raw = true;
+    bool draw_graph = true;
+    bool draw_compass = true;
     std::vector<sf::Vector2f> raw_image; // Vector line
+    std::vector<Complex> fourier_coeff; // Fourier coefficients
+    std::vector<Complex> spirograph_values; // current vectors of the spirograph
+    std::vector<sf::Vector2f> spirograph_nodes; // nodes of the spiregraph
+    std::vector<sf::Vector2f> graph_result; // the line drew by the spirograph
+
+    float rotation_speed = 0.01f;
+    int simulation_iterations = 1; // How often to repeat the simulation per frame
     String file_path;
     int interpolation_step = 5;
 

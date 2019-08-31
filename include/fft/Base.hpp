@@ -4,6 +4,8 @@
 using String = std::string;
 using std::to_string;
 
+using Complex = std::complex<float>;
+
 const int LOG_BUFFER_SIZE = 128;
 void log( String );
 std::array<String, LOG_BUFFER_SIZE> &get_log_buffer();

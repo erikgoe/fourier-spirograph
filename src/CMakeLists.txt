@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME}
     Framework.cpp
     GUI.cpp
     Vectorize.cpp
+    DFT.cpp
     
 )
 

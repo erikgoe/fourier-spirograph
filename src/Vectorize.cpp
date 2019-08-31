@@ -18,7 +18,7 @@ void vectorize( const String& path, std::vector<sf::Vector2f>& out, size_t inter
 
                 // Interpolate bezier curve
                 sf::Vector2f a( p[0], p[1] ), b( p[2], p[3] ), c( p[4], p[5] ), d( p[6], p[7] );
-                for ( size_t i = 0; i < interpolation_steps; i++ ) {
+                for ( size_t i = 0; i <= interpolation_steps; i++ ) {
                     float step = static_cast<float>( i ) / interpolation_steps;
 
                     auto x = vec_lerp( a, b, step );

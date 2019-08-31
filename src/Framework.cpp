@@ -64,7 +64,17 @@ void Framework::update( sf::Time &delta_time ) {
     timer_sec += delta_time.asSeconds();
 
     // Simulation
-
+    spirograph_nodes.resize( spirograph_values.size() );
+    for ( int iteration = 0; iteration < simulation_iterations; iteration++ ) {
+        sf::Vector2f last;
+        for ( int i = 0; i < spirograph_values.size(); i++ ) {
+            spirograph_values[i] *= std::pow<float, float>(
+                M_E, Complex( 0, M_PI * rotation_speed * ( ( i + 1 ) / 2 ) * ( i % 2 ? 1 : -1 ) ) );
+            last += sf::Vector2f( spirograph_values[i].real(), spirograph_values[i].imag() );
+            spirograph_nodes[i] = last;
+        }
+        graph_result.push_back( last );
+    }
 
     // Thread
     ++calc_offset_ctr;
@@ -84,8 +94,8 @@ void Framework::thread_run() {
     }
 }
 void Framework::render( sf::RenderTarget &target ) {
-    // Debug rendering
-    {
+    // Raw data
+    if ( draw_raw ) {
         sf::VertexArray va1( sf::PrimitiveType::LinesStrip, raw_image.size() );
         sf::VertexArray va2( sf::PrimitiveType::Points, raw_image.size() );
         for ( size_t i = 0; i < raw_image.size(); i++ ) {
@@ -93,15 +103,32 @@ void Framework::render( sf::RenderTarget &target ) {
             va2[i] = va1[i];
             va2[i].color = sf::Color::Magenta;
         }
-
         target.draw( va1 );
         target.draw( va2 );
+    }
+
+    // Resulting graph
+    if ( draw_graph ) {
+        sf::VertexArray va( sf::PrimitiveType::LinesStrip, graph_result.size() );
+        sf::Vector2f last;
+        for ( size_t i = 0; i < graph_result.size(); i++ ) {
+            va[i] = sf::Vertex( graph_result[i], sf::Color::Green );
+        }
+        target.draw( va );
+    }
+
+    // Spirograph
+    if ( draw_compass ) {
+        sf::VertexArray va( sf::PrimitiveType::LinesStrip, spirograph_nodes.size() + 1 );
+        for ( size_t i = 0; i < spirograph_nodes.size(); i++ ) {
+            va[i + 1] = sf::Vertex( spirograph_nodes[i], sf::Color( 200, 200, 50, 150 ) );
+        }
+        target.draw( va );
     }
 }
 
 void Framework::reload() {
     // Initialize stuff
-
 
     // Start thread
     calc_offset_ctr = 0;
