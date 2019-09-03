@@ -3,7 +3,7 @@
 #include "fft/GUI.hpp"
 #include "fft/Vectorize.hpp"
 #include "fft/DFT.hpp"
-#include "jet/live/Live.hpp"
+//#include "jet/live/Live.hpp"
 #include "noc/noc_file_dialog.h"
 
 namespace fft {

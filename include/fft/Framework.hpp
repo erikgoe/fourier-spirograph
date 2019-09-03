@@ -1,6 +1,6 @@
 #pragma once
 #include "fft/Base.hpp"
-#include "jet/live/Live.hpp"
+//#include "jet/live/Live.hpp"
 
 // Declare jet-live Live class
 namespace jet {
@@ -77,13 +77,11 @@ public:
 
     void render( sf::RenderTarget &target );
 
-#if ENABLE_HOT_RELOAD
-    /// Is called when a hot reload occurs
+    /// Is called when a reload occurs
     void reload();
 
-    /// Is called to prepare a hot reload
+    /// Is called to prepare a reload (or to terminate the system)
     void prepare_reload();
-#endif
 
     friend class HotReloadLogger;
     friend class GUI;

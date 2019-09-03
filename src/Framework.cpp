@@ -3,7 +3,7 @@
 #include "fft/GUI.hpp"
 #include "fft/HotReload.hpp"
 #include "fft/DFT.hpp"
-#include "jet/live/Live.hpp"
+//#include "jet/live/Live.hpp"
 
 namespace fft {
 Framework::Framework( std::function<void()> quit_callback ) {
