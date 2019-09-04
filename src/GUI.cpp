@@ -24,7 +24,7 @@ void GUI::layout_controller() {
     ImGui::Begin( "Settings" );
 
     if ( ImGui::Button( "Open file" ) ) {
-        auto path_c = noc_file_dialog_open( NOC_FILE_DIALOG_OPEN, nullptr, nullptr, nullptr );
+        auto path_c = noc_file_dialog_open( NOC_FILE_DIALOG_OPEN, "svg\0*.svg\0", nullptr, nullptr );
         if ( path_c ) {
             fw.file_path = path_c;
             vectorize( fw.file_path, fw.raw_image, fw.interpolation_step );
@@ -34,7 +34,6 @@ void GUI::layout_controller() {
 
     if ( ImGui::SliderInt( "Steps", &fw.interpolation_step, 2, 100 ) && !fw.file_path.empty() ) {
         vectorize( fw.file_path, fw.raw_image, fw.interpolation_step );
-        fw.fourier_coeff.resize( fw.raw_image.size() );
     }
     ImGui::Text( ( "File vertex count: " + to_string( fw.raw_image.size() ) ).c_str() );
 
