@@ -7,9 +7,12 @@ set(VERSION_MINOR 1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-# VCPKG
-if( VCPKG_SOURCE_DIR )
-	set(CMAKE_TOOLCHAIN_FILE "${VCPKG_SOURCE_DIR}/scripts/buildsystems/vcpkg.cmake")
+# Check optional dependencies
+if(EXISTS dep/cotire)
+set(ENABLE_COTIRE)
+endif()
+if(EXISTS dep/jet-live)
+set(ENABLE_JET_LIVE)
 endif()
 
 # Windows related stuff
@@ -18,25 +21,30 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} /MT")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /MTd")
-set(SFML_STATIC_LIBRARIES TRUE)
 endif()
 
 # scripts
-#include(dep/cotire/CMake/cotire.cmake)
-#include(dep/jet-live/cmake/jet_live_setup.cmake)
+if(ENABLE_COTIRE)
+include(dep/cotire/CMake/cotire.cmake)
+endif()
+if(ENABLE_JET_LIVE)
+include(dep/jet-live/cmake/jet_live_setup.cmake)
 set(JET_LIVE_BUILD_EXAMPLE OFF)
+endif()
 
 # module paths
-set(SFML_DIR "${VCPKG_SOURCE_DIR}/installed/x86-windows-static/share/sfml")
-set(FREETYPE_LIBRARY "${VCPKG_SOURCE_DIR}/installed/x86-windows-static/lib/freetype")
-set(FREETYPE_INCLUDE_DIRS "${VCPKG_SOURCE_DIR}/installed/x86-windows-static/include/freetype")
+set(SFML_DIR "${SFML_PATH}/lib/cmake/SFML")
 
 # packages
-#find_package(PkgConfig REQUIRED)
-#PKG_CHECK_MODULES(GTK3 REQUIRED gtk+-3.0)
-find_package(SFML CONFIG REQUIRED COMPONENTS system window graphics)
+if(UNIX)
+find_package(PkgConfig REQUIRED)
+PKG_CHECK_MODULES(GTK3 REQUIRED gtk+-3.0)
+endif()
+find_package(SFML COMPONENTS system window graphics REQUIRED)
 
 
 # subdirectories
 add_subdirectory(src)
+if(ENABLE_JET_LIVE)
 #add_subdirectory(dep/jet-live)
+endif()

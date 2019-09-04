@@ -3,7 +3,9 @@
 #include "fft/GUI.hpp"
 #include "fft/Vectorize.hpp"
 #include "fft/DFT.hpp"
-//#include "jet/live/Live.hpp"
+#if ENABLE_HOT_RELOAD
+#include "jet/live/Live.hpp"
+#endif
 #include "noc/noc_file_dialog.h"
 
 namespace fft {
@@ -39,7 +41,7 @@ void GUI::layout_controller() {
     ImGui::Spacing();
     int ff_c_size = fw.fourier_coeff.size();
     bool series_updated = false;
-    if ( ImGui::SliderInt( "Series length", &ff_c_size, 0, 1000 ) ) {
+    if ( ImGui::SliderInt( "Series length", &ff_c_size, 0, fw.raw_image.size() ) ) {
         fw.fourier_coeff.resize( ff_c_size );
         series_updated = true;
     }

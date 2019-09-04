@@ -1,6 +1,8 @@
 #pragma once
 #include "fft/Base.hpp"
-//#include "jet/live/Live.hpp"
+#if ENABLE_HOT_RELOAD
+#include "jet/live/Live.hpp"
+#endif
 
 // Declare jet-live Live class
 namespace jet {

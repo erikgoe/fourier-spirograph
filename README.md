@@ -14,11 +14,15 @@ git clone https://github.com/ocornut/imgui
 git clone https://github.com/eliasdaler/imgui-sfml
 git clone https://github.com/memononen/nanosvg
 git clone https://github.com/guillaumechereau/noc
+cat imgui-sfml/imconfig-SFML.h >> imgui/imconfig.h
 
 # Optional
 git clone https://github.com/sakra/cotire
 git clone https://github.com/ddovod/jet-live
 ```
+
+### Windows
+TODO
 follow the instructions at "Ingerating into your project manually" in imgui-sfml/README.md
 
 ## Building
@@ -27,6 +31,13 @@ follow the instructions at "Ingerating into your project manually" in imgui-sfml
 mkdir build && cd build
 cmake ..
 make
+```
+
+### Windows
+```
+mkdir build && cd build
+cmake .. -DSFML_PATH=C:/src/sfml/SFML-2.5.1
+msbuild ALL_BUILD.vcxproj
 ```
 
 ## Examples

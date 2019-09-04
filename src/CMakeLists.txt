@@ -30,28 +30,41 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/../dep/jet-live/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../dep
         ${GTK3_INCLUDE_DIRS}
-        ${SFML_INCLUDE_DIRS} 
-        ${VCPKG_SOURCE_DIR}/installed/x86-windows-static/include
+
+        if(MSVC)
+        ${SFML_PATH}/include 
+        endif()
 
 )
 
 # linking
 target_link_libraries(${PROJECT_NAME}
-    #${SFML_LIBRARIES}
-    ${VCPKG_SOURCE_DIR}/installed/x86-windows-static/lib/sfml-system-s.lib
-    ${VCPKG_SOURCE_DIR}/installed/x86-windows-static/lib/sfml-graphics-s.lib
-    ${VCPKG_SOURCE_DIR}/installed/x86-windows-static/lib/sfml-window-s.lib
-    #${SFML_DEPENDENCIES}
-    ${OPENGL_LIBRARIES}
+    sfml-graphics
+    sfml-window
+
+    if(UNIX)
+    GL
+    else()
+    opengl32
+    endif()
+    
     FLAC
     Vorbis
-    #jet-live
-    #${GTK3_LIBRARIES}
+    
+    if(ENABLE_JET_LIVE)
+    jet-live
+    endif()
+    
+    if(UNIX)
+    ${GTK3_LIBRARIES}
+    endif()
 )
 
 # cotire speedup
-#set_target_properties(${PROJECT_NAME} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "../include/${PROJECT_NAME}/stdafx.hpp")
-#cotire(${PROJECT_NAME})
+if(ENABLE_COTIRE)
+set_target_properties(${PROJECT_NAME} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "../include/${PROJECT_NAME}/stdafx.hpp")
+cotire(${PROJECT_NAME})
+endif()
 
 # add tests
 #add_subdirectory(tests)
