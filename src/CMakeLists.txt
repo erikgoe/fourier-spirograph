@@ -34,6 +34,18 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # linking
+set(PROJ_LIBS sfml-graphics sfml-window FLAC Vorbis)
+
+if(UNIX)
+set(PROJ_LIBS GL pthread ${GTK3_LIBRARIES} ${PROJ_LIBS})
+else()
+set(PROJ_LIBS opengl32 ${PROJ_LIBS})
+endif()
+
+if(ENABLE_JET_LIVE)
+set(PROJ_LIBS jet-live ${PROJ_LIBS})
+endif()
+
 target_link_libraries(${PROJECT_NAME}
     sfml-graphics
     sfml-audio
