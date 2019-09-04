@@ -1,11 +1,15 @@
 #pragma once
 #include <iostream>
+#include <atomic>
+#include <array>
 #include <string>
 #include <vector>
 #include <list>
 #include <map>
 #include <set>
 #include <memory>
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <cmath>
 #include <complex>
 #include <functional>

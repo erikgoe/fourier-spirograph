@@ -31,20 +31,34 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/../dep
         ${GTK3_INCLUDE_DIRS}
 
+        if(MSVC)
+        ${SFML_PATH}/include 
+        endif()
+
 )
 
 # linking
+set(PROJ_LIBS sfml-graphics sfml-window FLAC Vorbis)
+
+if(UNIX)
+set(PROJ_LIBS GL ${GTK3_LIBRARIES} ${PROJ_LIBS})
+else()
+set(PROJ_LIBS opengl32 ${PROJ_LIBS})
+endif()
+
+if(ENABLE_JET_LIVE)
+set(PROJ_LIBS jet-live ${PROJ_LIBS})
+endif()
+
 target_link_libraries(${PROJECT_NAME}
-    sfml-graphics
-    sfml-audio
-    GL
-    jet-live
-    ${GTK3_LIBRARIES}
+    ${PROJ_LIBS}
 )
 
 # cotire speedup
+if(ENABLE_COTIRE)
 set_target_properties(${PROJECT_NAME} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "../include/${PROJECT_NAME}/stdafx.hpp")
 cotire(${PROJECT_NAME})
+endif()
 
 # add tests
 #add_subdirectory(tests)

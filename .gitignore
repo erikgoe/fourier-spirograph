@@ -4,3 +4,4 @@ Win32/
 dep/
 .fssignore
 imgui.ini
+.vscode/
