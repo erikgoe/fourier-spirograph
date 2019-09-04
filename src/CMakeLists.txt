@@ -38,26 +38,20 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # linking
-target_link_libraries(${PROJECT_NAME}
-    sfml-graphics
-    sfml-window
+set(PROJ_LIBS sfml-graphics sfml-window FLAC Vorbis)
 
-    if(UNIX)
-    GL
-    else()
-    opengl32
-    endif()
-    
-    FLAC
-    Vorbis
-    
-    if(ENABLE_JET_LIVE)
-    jet-live
-    endif()
-    
-    if(UNIX)
-    ${GTK3_LIBRARIES}
-    endif()
+if(UNIX)
+set(PROJ_LIBS GL ${GTK3_LIBRARIES} ${PROJ_LIBS})
+else()
+set(PROJ_LIBS opengl32 ${PROJ_LIBS})
+endif()
+
+if(ENABLE_JET_LIVE)
+set(PROJ_LIBS jet-live ${PROJ_LIBS})
+endif()
+
+target_link_libraries(${PROJECT_NAME}
+    ${PROJ_LIBS}
 )
 
 # cotire speedup

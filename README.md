@@ -39,7 +39,7 @@ git clone https://github.com/ocornut/imgui
 git clone https://github.com/eliasdaler/imgui-sfml
 git clone https://github.com/memononen/nanosvg
 git clone https://github.com/guillaumechereau/noc
-copy imgui/imconfig.h imgui-sfml/imconfig-SFML.h imgui/imconfig.h
+copy /b imgui\imconfig.h + imgui-sfml\imconfig-SFML.h imgui\imconfig.h
 
 # Optional
 git clone https://github.com/sakra/cotire
