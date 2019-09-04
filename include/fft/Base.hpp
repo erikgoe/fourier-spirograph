@@ -20,7 +20,7 @@ class HotReloadLogger;
 
 // Global control to enable/disable hot reload (required jet-live)
 #ifndef DEBUG
-#define ENABLE_HOT_RELOAD 1
+#define ENABLE_HOT_RELOAD 0
 #else
 #define ENABLE_HOT_RELOAD 0
 #endif
